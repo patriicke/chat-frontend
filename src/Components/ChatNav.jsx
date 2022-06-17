@@ -15,12 +15,12 @@ export default function ChatNav() {
           <input
             type="text"
             placeholder="Search..."
-            className="text-[1.15rem] outline-none h-full pl-3"
+            className="text-[1.15rem] outline-none h-full pl-3 border-r-2 w-[90%]"
           />
-          <span className="material-symbols-outlined text-[1.1em]">search</span>
+          <span className="material-symbols-outlined text-[1.1em] w-[10%] flex justify-center items-center h-full">search</span>
         </div>
-        <i class="fa-regular fa-bell"></i>
-        <i class="fa-regular fa-comment-dots"></i>
+        <i className="fa-regular fa-bell"></i>
+        <i className="fa-regular fa-comment-dots"></i>
         <span className="material-symbols-outlined text-[1.2em]">favorite</span>
         <span className="material-symbols-outlined text-[1.2em]">contrast</span>
         <span className="material-symbols-outlined text-[1.2em]">
