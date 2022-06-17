@@ -11,23 +11,26 @@ export default function ChatTab() {
     socket.emit("join_room", room);
   }, []);
   const sendMessage = () => {
-    socket.emit("send_message", { message, room, sender: "sender" });
-    setReceived((list) => [...list, message]);
+    const time = `${new Date().getHours()}: ${new Date().getMinutes()}`;
+    socket.emit("send_message", { message, room, time });
+    setReceived((list) => [...list, message, time]);
   };
   socket.off("receive_message").on("receive_message", (data) => {
-    setReceived((list) => [...list, data.message]);
+    setReceived((list) => [...list, data.message, data.time]);
   });
   return (
-    <div className="h-[100%] w-[40%] bg-white shadow-lg">
+    <div className="h-[100%] w-[40%] bg-white shadow-lg ">
       <div
         className={`${
           typing ? "h-[88%]" : "h-[90%]"
-        } shadow-lg flex p-3  gap-2 flex-col`}
+        } shadow-lg flex p-3  gap-2 flex-col overflow-auto`}
       >
         {received.map((data, index) => (
           <div key={index} className="text-[1.3em] flex items-center px-2 ">
             <div
-              className={`max-w-[50%] break-words py-1 px-3 bg-[#f7f4f8] rounded-r-[1em] rounded-bl-[1em] min-h-[2em]`}
+              className={`max-w-[50%] break-words py-1 px-3 bg-[#f7f4f8] rounded-r-[1em] rounded-bl-[1em] min-h-[2em] ${
+                index % 2 === 0 ? "" : "text-red-500"
+              }`}
             >
               {data}
             </div>
@@ -68,7 +71,9 @@ export default function ChatTab() {
         </div>
       </div>
       {typing && (
-        <div className="h-[3%] px-5 text-slate-500 ">{"Patrick NDAYAMBAJE is "} typin...</div>
+        <div className="h-[3%] px-5 text-slate-500 ">
+          {"Patrick NDAYAMBAJE is "} typin...
+        </div>
       )}
     </div>
   );
