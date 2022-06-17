@@ -1,3 +1,4 @@
+import Image from "/image.jpg";
 export default function ChatNav() {
   return (
     <div className="h-[7%] flex items-center text-[2em]  justify-between text-[#354259] shadow-lg px-5">
@@ -17,15 +18,15 @@ export default function ChatNav() {
             placeholder="Search..."
             className="text-[1.15rem] outline-none h-full pl-3 border-r-2 w-[90%]"
           />
-          <span className="material-symbols-outlined text-[1.1em] w-[10%] flex justify-center items-center h-full">search</span>
+          <span className="material-symbols-outlined text-[1.1em] w-[10%] flex justify-center items-center h-full">
+            search
+          </span>
         </div>
         <i className="fa-regular fa-bell"></i>
         <i className="fa-regular fa-comment-dots"></i>
         <span className="material-symbols-outlined text-[1.2em]">favorite</span>
         <span className="material-symbols-outlined text-[1.2em]">contrast</span>
-        <span className="material-symbols-outlined text-[1.2em]">
-          account_circle
-        </span>
+          <img src={Image} alt="Profile Image" className="w-[1.2em] h-[1.2em] rounded-full" />
       </div>
     </div>
   );
