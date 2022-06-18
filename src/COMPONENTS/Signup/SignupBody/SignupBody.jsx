@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Loading from "./../../Loading/Loading";
 import api from "./../../../API/api";
 import SignUpNav from "../SignupNavBar/SignupNavBar";
@@ -7,6 +7,7 @@ import SignupForm from "../Signupform/SignupForm";
 import Image from "/chatting-design-concept-with-hand-holding-cellphone_7087-798.webp";
 export default function SignupBody() {
   const navigate = useNavigate();
+  const [display, setDisplay] = useState(true);
   const [serverMsg, setServerMsg] = useState("");
   const [newUser, setUser] = useState({});
   const [loading, setLoading] = useState(false);
@@ -30,20 +31,18 @@ export default function SignupBody() {
     }
     if (newUser.password === newUser.cpassword) {
       try {
-        const response = await axios.post("/signup", newUser, {
+        const response = await api.post("/signup", newUser, {
           withCredentials: true
         });
+        console.log(response.data);
         if (response.data === "email already exists") {
           setLoading(false);
-          return setServerMsg(
-            "Email Already exists. Please use another email or Login"
-          );
+          setDisplay(true);
+          return setServerMsg("Please try using another email");
         }
         if (response.data === "username already exists") {
           setLoading(false);
-          return setServerMsg(
-            "Usename already exists. Please user another username"
-          );
+          return setServerMsg("Please try using another username");
         }
         localStorage.setItem("token", response.data.token);
         navigate("/");
@@ -52,9 +51,7 @@ export default function SignupBody() {
       }
     } else {
       setLoading(false);
-      return setServerMsg(
-        "Passwords don't match. Try using matching passwords"
-      );
+      return setServerMsg("Passwords don't match!");
     }
   }
 
@@ -76,6 +73,10 @@ export default function SignupBody() {
           handleChange={handleChange}
           handleSubmit={handleSubmit}
           serverMsg={serverMsg}
+          newUser={newUser}
+          setServerMsg={setServerMsg}
+          display={display}
+          setDisplay={setDisplay}
         />
       </div>
     </div>

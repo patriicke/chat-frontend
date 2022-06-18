@@ -37,7 +37,7 @@ export default function LoginBody() {
       } else if (user.data === "Incorrect Data") {
         setLoading(false);
         return setServerMsg(
-          (msg) => "User password or email is not correct. Please Try again!"
+          (msg) => "User password or email is not correct!"
         );
       }
       localStorage.setItem("token", user.data.token);

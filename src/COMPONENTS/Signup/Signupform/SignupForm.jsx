@@ -1,14 +1,17 @@
 import React, { useState, useRef } from "react";
-import { Link } from "react-router-dom";
 import SignUpWith from "../../SignupWith/SignupWith";
 export default function SignupForm({
   loading,
   handleChange,
   handleSubmit,
   ServerMessage,
-  serverMsg
+  serverMsg,
+  newUser,
+  setServerMsg,
+  display,
+  setDisplay
 }) {
-  const [display, setDisplay] = useState(true);
+  // const [display, setDisplay] = useState(true);
   const [moveTopFname, setMoveTopFname] = useState(false);
   const [moveTopLname, setMoveTopLname] = useState(false);
   const [moveTopEmail, setMoveTopEmail] = useState(false);
@@ -108,15 +111,17 @@ export default function SignupForm({
       <div className="w-[100%] h-[10%] text-[2em] font-bold justify-center flex">
         Signup to Chatsp
       </div>
-      { display && first.map((data, index) => {
+      {first.map((data, index) => {
         return (
           <div
-            className="w-[100%] h-[10%] px-3 relative border-2 rounded-md "
+            className={`w-[100%] h-[10%] px-3 relative border-2 rounded-md ${
+              display ? "" : "hidden"
+            }`}
             key={index}
           >
             <span
               className={`absolute ${
-                data.current ? "top-[-25%]" : "top-[25%]"
+                data.current ? "top-[-25%] text-[#5c07fc]" : "top-[25%]"
               } text-[1.2em] opacity-[0.6] bg-white px-1 ease-in duration-75`}
               onClick={() => {
                 data.hit(true);
@@ -128,6 +133,7 @@ export default function SignupForm({
             <input
               type={data.type}
               name={data.name}
+              value={data.inputValue}
               className="w-[100%] h-[100%] text-[1.3em]  outline-none"
               onChange={handleChange}
               onFocus={() => {
@@ -139,16 +145,18 @@ export default function SignupForm({
           </div>
         );
       })}
-      {display === false && second.map((data, index) => {
+      {second.map((data, index) => {
         return (
           <div
-            className="w-[100%] h-[10%] px-3 relative border-2 rounded-md "
+            className={`w-[100%] h-[10%] px-3 relative border-2 rounded-md ${
+              display ? "hidden" : ""
+            }`}
             key={index}
           >
             <span
               className={`absolute ${
-                data.current ? "top-[-25%]" : "top-[25%]"
-              } text-[1.2em] opacity-[0.6] bg-white px-1 ease-in duration-75`}
+                data.current ? "top-[-25%] text-[#5c07fc]" : "top-[25%]"
+              } text-[1.2em] opacity-[0.6] bg-white px-1 ease-in duration-75 `}
               onClick={() => {
                 data.hit(true);
                 data.functionHandler();
@@ -176,7 +184,7 @@ export default function SignupForm({
           className={`${
             display ? "" : "bg-green-500"
           } h-[80%] w-[40%] rounded-md shadow-lg text-[1.2em] font-bold flex items-center justify-center`}
-          type="}button"
+          type="button"
           onClick={() => {
             setDisplay(true);
           }}
@@ -189,10 +197,20 @@ export default function SignupForm({
             display ? "bg-green-500" : "bg-[#5c07fc] text-white"
           } h-[80%] w-[40%] rounded-md shadow-lg text-[1.4em] font-bold`}
           onClick={() => {
-            setDisplay(false);
+            if (newUser.fname == undefined) {
+              setServerMsg("Please enter first name");
+            } else if (newUser.lname == undefined) {
+              setServerMsg("Please enter last name");
+            } else if (newUser.email == undefined) {
+              setServerMsg("Please enter email");
+            } else if (!newUser.email.includes("@gmail.com")) {
+              setServerMsg("Invalid email");
+            } else {
+              setDisplay(false);
+            }
           }}
         >
-          {display? "NEXT" :"SUBMIT"} 
+          {display ? "NEXT" : "SUBMIT"}
         </button>
       </div>
       <SignUpWith />
