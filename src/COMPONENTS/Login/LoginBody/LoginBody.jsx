@@ -41,6 +41,7 @@ export default function LoginBody() {
         );
       }
       localStorage.setItem("token", user.data.token);
+      localStorage.setItem("refresh", user.data.refresh)
       navigate("/");
     } catch (error) {
       console.log(error.response.data);

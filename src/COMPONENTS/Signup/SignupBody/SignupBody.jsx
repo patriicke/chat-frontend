@@ -45,6 +45,7 @@ export default function SignupBody() {
           return setServerMsg("Please try using another username");
         }
         localStorage.setItem("token", response.data.token);
+        localStorage.setItem("refresh", response.data.refresh);
         navigate("/");
       } catch (error) {
         console.log(error.response.data);
@@ -65,8 +66,16 @@ export default function SignupBody() {
   return (
     <div className="w-[100%] h-[100vh] flex flex-col gap-1 ">
       <SignUpNav />
+      {loading && (
+        <div className="absolute top-[50%] left-[45%] z-[1]">{<Loading />}</div>
+      )}
       <div className="w-[100%] h-[90%] flex items-center justify-evenly">
-        <img src={Image} />
+        <img
+          src={Image}
+          className={`
+        ${loading ? "blur-lg" : "blur-none"}
+        `}
+        />
         <SignupForm
           ServerMessage={ServerMessage}
           loading={loading}

@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
 import Image from "/image.jpg";
+import api from "./../../../../API/api";
 const socket = io.connect("http://localhost:2030");
 export default function ChatTab() {
+  const navigate = useNavigate();
   const [message, setMessage] = useState("");
   const [received, setReceived] = useState([]);
   const [typing, setTyping] = useState(false);
@@ -16,8 +19,27 @@ export default function ChatTab() {
     setReceived((list) => [...list, message, time]);
   };
   socket.off("receive_message").on("receive_message", (data) => {
-    console.log(data)
+    console.log(data);
     setReceived((list) => [...list, data.message, data.time]);
+  });
+  useEffect(() => {
+    async function handleHome() {
+      const response = await api.get("/home", {
+        headers: {
+          Authorization: `
+           ${localStorage.getItem("refresh")} ${localStorage.getItem("token")}
+          `
+        }
+      });
+      console.log(response.data);
+      if (response.data == "signin") {
+        localStorage.removeItem("refresh");
+        localStorage.removeItem("token");
+        navigate("/login");
+      }
+      localStorage.setItem("token", response.data.token);
+    }
+    handleHome();
   });
   return (
     <div className="h-[100%] w-[40%] bg-white shadow-lg ">
@@ -64,7 +86,9 @@ export default function ChatTab() {
               <i
                 className="fa-solid fa-paper-plane text-[1.8em] text-[#5c07fc] cursor-pointer"
                 onClick={sendMessage}
-              ></i>
+              >
+                send
+              </i>
             </div>
           </div>
         </div>

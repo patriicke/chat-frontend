@@ -11,7 +11,6 @@ export default function SignupForm({
   display,
   setDisplay
 }) {
-  // const [display, setDisplay] = useState(true);
   const [moveTopFname, setMoveTopFname] = useState(false);
   const [moveTopLname, setMoveTopLname] = useState(false);
   const [moveTopEmail, setMoveTopEmail] = useState(false);
@@ -104,7 +103,7 @@ export default function SignupForm({
   return (
     <form
       className={`bg-white w-[30em] h-[45em] shadow-xl rounded-md flex py-3 px-2 flex-col gap-4 ${
-        loading ? "blur-sm" : "blur-none"
+        loading ? "blur-lg" : "blur-none"
       }`}
       onSubmit={handleSubmit}
     >
@@ -206,6 +205,7 @@ export default function SignupForm({
             } else if (!newUser.email.includes("@gmail.com")) {
               setServerMsg("Invalid email");
             } else {
+              setServerMsg("");
               setDisplay(false);
             }
           }}
