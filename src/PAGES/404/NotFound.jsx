@@ -1,5 +1,6 @@
 import Navbar from "../../COMPONENTS/Navbar/Navbar";
 export default function PageNotFound() {
+  document.title = "404 Page not Found";
   return (
     <div className="w-[100%] h-[100vh] flex flex-col gap-1">
       <Navbar />

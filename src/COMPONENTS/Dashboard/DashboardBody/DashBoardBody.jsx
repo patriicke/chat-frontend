@@ -1,6 +1,11 @@
 import React from "react";
 import DashBoardMessaging from "../DashBoardMessaging/DashBoardMessaging";
+import Twitter from "/co-oop/twitter.png";
+import Instagram from "/co-oop/instagram.png";
+import Linkedin from "/co-oop/linkedin.png";
+
 export default function DashBoardBody() {
+  document.title = "Welcome to Chatsp! This is where you will connect to everyone you want.";
   return (
     <div className="h-[95%] flex gap-3 flex-col">
       <div className="h-[80%] flex w-[100%]">
@@ -28,13 +33,13 @@ export default function DashBoardBody() {
           We are trusted by hundereds of startups
         </div>
         <div className="h-[100% w-[55%] flex items-center justify-center gap-10">
-          <i className="fa-brands fa-twitter text-[3em]"></i>
-          <i className="fa-brands fa-linkedin text-[3em]"></i>
-          <i className="fa-brands fa-pinterest text-[3em]"></i>
-          <i className="fa-brands fa-instagram text-[3em]"></i>
-          <i className="fa-brands fa-whatsapp text-[3em]"></i>
-          <i className="fa-brands fa-slack text-[3em]"></i>
-          <span className="material-symbols-outlined animate-bounce font-bold text-[1.5em] cursor-pointer">
+          <img src={Twitter} className="w-[5em]" />
+          <img src={Instagram} className="w-[3.5em]" />
+          <img src={Linkedin} className="w-[4em]" />
+          <i className="fa-brands fa-pinterest text-[3.5em]"></i>
+          <i className="fa-brands fa-whatsapp text-[3.5em]"></i>
+          <i className="fa-brands fa-slack text-[3.5em]"></i>
+          <span className="material-symbols-outlined animate-bounce font-bold text-[2em] cursor-pointer">
             arrow_forward_ios
           </span>
         </div>

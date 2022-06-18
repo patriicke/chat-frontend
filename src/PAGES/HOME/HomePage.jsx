@@ -1,4 +1,5 @@
-import HomeContent from "./../../COMPONENTS/Home/HomeContent"
+import HomeContent from "./../../COMPONENTS/Home/HomeContent";
 export default function HomePage() {
-  return <HomeContent />
+  document.title = "Chatsp";
+  return <HomeContent />;
 }

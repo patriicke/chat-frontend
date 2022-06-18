@@ -1,5 +1,4 @@
 export default function SettingsPage() {
-  return (
-    <div>SettingsPage</div>
-  )
+  document.title = "Chatsp settings";
+  return <div>SettingsPage</div>;
 }

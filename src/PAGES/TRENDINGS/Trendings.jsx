@@ -1,7 +1,6 @@
-import React from 'react'
+import React from "react";
 
 export default function Trendings() {
-  return (
-    <div>Trendings</div>
-  )
+  document.title = "Trendings";
+  return <div>Trendings</div>;
 }
