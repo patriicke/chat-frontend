@@ -1,5 +1,4 @@
 import React, { useState, useRef } from "react";
-import Loading from "./../../Loading/Loading";
 import SignInWith from "../../SignInwith/SignInwith";
 export default function LoginForm({
   loading,
@@ -22,14 +21,11 @@ export default function LoginForm({
 
   return (
     <form
-      className={`bg-white w-[30em] h-[40em] shadow-xl rounded-md flex py-5 px-2 flex-col gap-4 ${
-        loading ? "blur-sm" : "blur-none"
-      } `}
+      className={`bg-white w-[30em] h-[40em] shadow-xl rounded-md flex py-5 px-2 flex-col gap-4 
+        ${loading ? "blur-lg " : "blur-none"}
+      `}
       onSubmit={handleSubmit}
     >
-      {loading && (
-        <div className="absolute top-[50%] left-[45%]">{<Loading />}</div>
-      )}
       <div className="w-[100%] h-[12%] text-[2em] font-bold justify-center flex">
         Login to Chatsp
       </div>

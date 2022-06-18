@@ -4,6 +4,8 @@ import LoginNavBar from "../LoginNavBar/LoginNavBar";
 import LoginForm from "../LoginForm/LoginForm";
 import Image from "/chatting-design-concept-with-hand-holding-cellphone_7087-798.webp";
 import api from "./../../../API/api";
+import Loading from "./../../Loading/Loading";
+
 export default function LoginBody() {
   const [newUser, setUser] = useState({});
   const [serverMsg, setServerMsg] = useState("");
@@ -15,6 +17,10 @@ export default function LoginBody() {
     setUser((values) => ({ ...values, [name]: value }));
   }
   async function handleSubmit(event) {
+    if (!newUser.email.includes("@gmail.com")) {
+      setLoading(false);
+      return setServerMsg("Invalid email")
+    }
     if (newUser.email == null || newUser.password == null) {
       setLoading(false);
       return setServerMsg("Please fill the form!");
@@ -24,7 +30,7 @@ export default function LoginBody() {
       const user = await api.post("/login", newUser, {
         withCredentials: true
       });
-      console.log(user.data)
+      console.log(user.data);
       if (user.data === "Not Found") {
         setLoading(false);
         return setServerMsg((msg) => "User is not found. Please Signup");
@@ -51,8 +57,22 @@ export default function LoginBody() {
   return (
     <div className="w-[100%] h-[100vh] flex flex-col gap-1 ">
       <LoginNavBar />
-      <div className="w-[100%] h-[90%] flex items-center justify-evenly">
-        <img src={Image} />
+      <div
+        className={`w-[100%] h-[90%] flex items-center justify-evenly 
+      `}
+      >
+        {loading && (
+          <div className="absolute top-[50%] left-[45%] z-[1]">
+            {<Loading />}
+          </div>
+        )}
+        <img
+          src={Image}
+          className={`
+      ${loading ? "blur-lg cursor-not-allowed" : "blur-none"}
+        
+        `}
+        />
         <LoginForm
           loading={loading}
           handleSubmit={handleSubmit}
