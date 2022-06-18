@@ -17,7 +17,7 @@ export default function DashBoardNavBar() {
       <div
         className="bg-[#5c07fc] text-white text-[1.4rem] p-2 px-4 rounded-[2em] cursor-pointer"
         onClick={() => {
-          navigate("/signup");
+          navigate("/login");
         }}
       >
         Get Started
