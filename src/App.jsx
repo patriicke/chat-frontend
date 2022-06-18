@@ -1,4 +1,3 @@
-import ChatWindow from "./COMPONENTS/Chat/ChatWindow";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomeBoard from "./PAGES/H&D/HomeBoard";
 import SettingsPage from "./PAGES/SETTINGS/SettingsPage";
