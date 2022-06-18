@@ -19,7 +19,6 @@ export default function ChatTab() {
     setReceived((list) => [...list, message, time]);
   };
   socket.off("receive_message").on("receive_message", (data) => {
-    console.log(data);
     setReceived((list) => [...list, data.message, data.time]);
   });
   useEffect(() => {
@@ -31,9 +30,7 @@ export default function ChatTab() {
           `
         }
       });
-      console.log(response.data);
       if (response.data == "signin") {
-        localStorage.removeItem("refresh");
         localStorage.removeItem("token");
         navigate("/login");
       }
