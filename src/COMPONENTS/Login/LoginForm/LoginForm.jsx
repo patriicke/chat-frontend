@@ -1,11 +1,13 @@
 import React, { useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import Loading from "./../../Loading/Loading";
 import SignInWith from "../../SignInwith/SignInwith";
 export default function LoginForm({
   loading,
   handleSubmit,
   handleChange,
-  serverMsg
+  serverMsg,
+  setLoading,
+  ServerMessage
 }) {
   const [moveTop, setMoveTop] = useState(false);
   const [moveTopEmail, setMoveTopEmail] = useState(false);
@@ -17,7 +19,7 @@ export default function LoginForm({
   const hanldleFocusPasswprd = () => {
     PasswordElement.current.focus();
   };
-  
+
   return (
     <form
       className={`bg-white w-[30em] h-[40em] shadow-xl rounded-md flex py-5 px-2 flex-col gap-4 ${
@@ -25,13 +27,16 @@ export default function LoginForm({
       } `}
       onSubmit={handleSubmit}
     >
+      {loading && (
+        <div className="absolute top-[50%] left-[45%]">{<Loading />}</div>
+      )}
       <div className="w-[100%] h-[12%] text-[2em] font-bold justify-center flex">
         Login to Chatsp
       </div>
       <div className="w-[100%] h-[10%] px-3 relative border-2 rounded-md ">
         <span
           className={`absolute ${
-            moveTop ? "top-[-25%]" : "top-[25%]"
+            moveTop ? "top-[-25%] text-[#5c07fc]" : "top-[25%]"
           } text-[1.2em] opacity-[0.6] bg-white px-1 ease-in duration-75`}
           onClick={() => {
             setMoveTop(true);
@@ -55,7 +60,7 @@ export default function LoginForm({
       <div className="w-[100%] h-[10%] px-3 relative border-2 rounded-md ">
         <span
           className={`absolute ${
-            moveTopEmail ? "top-[-25%]" : "top-[25%]"
+            moveTopEmail ? "top-[-25%] text-[#5c07fc]" : "top-[25%] "
           } text-[1.2em] opacity-[0.6] bg-white px-1 ease-in duration-75`}
           onClick={() => {
             setMoveTopEmail(true);

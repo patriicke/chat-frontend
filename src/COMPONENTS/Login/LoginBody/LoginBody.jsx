@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import Loading from "./../../Loading/Loading";
+import { useNavigate } from "react-router-dom";
 import LoginNavBar from "../LoginNavBar/LoginNavBar";
 import LoginForm from "../LoginForm/LoginForm";
 import Image from "/chatting-design-concept-with-hand-holding-cellphone_7087-798.webp";
@@ -22,9 +21,10 @@ export default function LoginBody() {
     }
     event.preventDefault();
     try {
-      const user = await axios.post("/login", newUser, {
+      const user = await api.post("/login", newUser, {
         withCredentials: true
       });
+      console.log(user.data)
       if (user.data === "Not Found") {
         setLoading(false);
         return setServerMsg((msg) => "User is not found. Please Signup");
@@ -58,6 +58,8 @@ export default function LoginBody() {
           handleSubmit={handleSubmit}
           handleChange={handleChange}
           serverMsg={serverMsg}
+          setLoading={setLoading}
+          ServerMessage={ServerMessage}
         />
       </div>
     </div>
