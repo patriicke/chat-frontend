@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const instance = axios.create({
-  baseURL: "http://localhost:2030",
-  withCredentials: true,
+  baseURL: "https://chatsp-backend.herokuapp.com",
+  withCredentials: true
 });
 
 export default instance;
