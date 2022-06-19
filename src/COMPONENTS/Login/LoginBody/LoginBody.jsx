@@ -19,7 +19,7 @@ export default function LoginBody() {
   async function handleSubmit(event) {
     if (!newUser.email.includes("@gmail.com")) {
       setLoading(false);
-      return setServerMsg("Invalid email")
+      return setServerMsg("Invalid email");
     }
     if (newUser.email == null || newUser.password == null) {
       setLoading(false);
@@ -30,18 +30,15 @@ export default function LoginBody() {
       const user = await api.post("/login", newUser, {
         withCredentials: true
       });
-      console.log(user.data);
       if (user.data === "Not Found") {
         setLoading(false);
         return setServerMsg((msg) => "User is not found. Please Signup");
       } else if (user.data === "Incorrect Data") {
         setLoading(false);
-        return setServerMsg(
-          (msg) => "User password or email is not correct!"
-        );
+        return setServerMsg((msg) => "User password or email is not correct!");
       }
       localStorage.setItem("token", user.data.token);
-      localStorage.setItem("refresh", user.data.refresh)
+      localStorage.setItem("refresh", user.data.refresh);
       navigate("/");
     } catch (error) {
       console.log(error.response.data);

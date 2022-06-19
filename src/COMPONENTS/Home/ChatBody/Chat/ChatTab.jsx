@@ -26,14 +26,17 @@ export default function ChatTab() {
       const response = await api.get("/home", {
         headers: {
           Authorization: `
-           ${localStorage.getItem("refresh")} ${localStorage.getItem("token")}
+           ${localStorage.getItem("refresh")} ${localStorage.getItem("token")} 
           `
         }
       });
+      console.log(response.data);
       if (response.data == "signin") {
         localStorage.removeItem("token");
-        navigate("/login");
+        localStorage.removeItem("refresh");
+        return navigate("/login");
       }
+      localStorage.setItem("refresh", response.data.refresh);
       localStorage.setItem("token", response.data.token);
     }
     handleHome();
@@ -83,9 +86,7 @@ export default function ChatTab() {
               <i
                 className="fa-solid fa-paper-plane text-[1.8em] text-[#5c07fc] cursor-pointer"
                 onClick={sendMessage}
-              >
-                send
-              </i>
+              ></i>
             </div>
           </div>
         </div>
