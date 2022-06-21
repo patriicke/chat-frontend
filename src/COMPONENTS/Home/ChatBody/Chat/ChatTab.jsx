@@ -79,12 +79,11 @@ export default function ChatTab({ getData }) {
         {received.map((data, index) => (
           <div
             key={index}
-            className={`flex 
-                  ${
-                    userData.username === data.username
-                      ? "justify-end"
-                      : "justify-start"
-                  }`}
+            className={`flex ${
+              userData.username === data.username
+                ? "justify-end"
+                : "justify-start"
+            }`}
           >
             <div
               className={`text-[1rem]  items-center px-2 relative max-w-[50%] break-words rounded-l-[1em] rounded-br-[1em] 
