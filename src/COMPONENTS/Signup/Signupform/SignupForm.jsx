@@ -191,7 +191,7 @@ export default function SignupForm({
           BACK
         </button>
         <button
-          type={display ? "button" : "submit"}
+          type="button"
           className={`${
             display ? "bg-green-500" : "bg-[#5c07fc] text-white"
           } h-[80%] w-[40%] rounded-md shadow-lg text-[1.4em] font-bold`}
@@ -207,6 +207,9 @@ export default function SignupForm({
             } else {
               setServerMsg("");
               setDisplay(false);
+              if (!display) {
+                handleSubmit(event);
+              }
             }
           }}
         >
