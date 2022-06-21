@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import Image from "/image.jpg";
-export default function Navbar() {
+export default function Navbar({ userInfo }) {
   const navigate = useNavigate();
   return (
     <div className="h-[7%] flex items-center text-[2em]  justify-between text-[#354259] shadow-lg px-5">
@@ -40,6 +40,11 @@ export default function Navbar() {
           alt="Profile Image"
           className="w-[1.2em] h-[1.2em] rounded-full"
         />
+        {
+          <div className="bg-slate-50 shadow-2xl h-[10em] w-[10em] absolute right-[1em] top-[7%] flex flex-col">
+            <div className="text-[1rem]">{`${userInfo.fname} ${userInfo.lname}`}</div>
+          </div>
+        }
       </div>
     </div>
   );

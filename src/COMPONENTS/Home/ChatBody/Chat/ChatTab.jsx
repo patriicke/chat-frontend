@@ -3,23 +3,41 @@ import { useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
 import Image from "/image.jpg";
 import api from "./../../../../API/api";
-const socket = io.connect("https://chatsp-backend.herokuapp.com");
-export default function ChatTab() {
+const socket = io.connect("http://localhost:2030");
+export default function ChatTab({ getData }) {
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
   const [received, setReceived] = useState([]);
   const [typing, setTyping] = useState(false);
+  const [userData, setUserData] = useState({});
   const room = 12;
   useEffect(() => {
     socket.emit("join_room", room);
   }, []);
   const sendMessage = () => {
     const time = `${new Date().getHours()}: ${new Date().getMinutes()}`;
-    socket.emit("send_message", { message, room, time });
-    setReceived((list) => [...list, message, time]);
+    socket.emit("send_message", {
+      message,
+      room,
+      time,
+      user_id: userData.id,
+      username: userData.username
+    });
+    setReceived((list) => [
+      ...list,
+      { message, time, user_id: userData.id, username: userData.username }
+    ]);
   };
   socket.off("receive_message").on("receive_message", (data) => {
-    setReceived((list) => [...list, data.message, data.time]);
+    setReceived((list) => [
+      ...list,
+      {
+        message: data.message,
+        time: data.time,
+        user_id: data.user_id,
+        username: data.username
+      }
+    ]);
   });
   useEffect(() => {
     async function handleHome() {
@@ -30,17 +48,18 @@ export default function ChatTab() {
           `
         }
       });
-      console.log(response.data);
       if (response.data == "signin") {
         localStorage.removeItem("token");
         localStorage.removeItem("refresh");
         return navigate("/login");
       }
+      getData(response.data.userData);
+      setUserData(response.data.userData);
       localStorage.setItem("refresh", response.data.refresh);
       localStorage.setItem("token", response.data.token);
     }
     handleHome();
-  });
+  }, []);
   return (
     <div className="h-[100%] w-[40%] bg-white shadow-lg ">
       <div
@@ -49,13 +68,34 @@ export default function ChatTab() {
         } shadow-lg flex p-3  gap-2 flex-col overflow-auto`}
       >
         {received.map((data, index) => (
-          <div key={index} className="text-[1.3em] flex items-center px-2 ">
+          <div
+            key={index}
+            className={`flex 
+                  ${
+                    userData.username === data.username
+                      ? "justify-end"
+                      : "justify-start"
+                  }`}
+          >
             <div
-              className={`max-w-[50%] break-words py-1 px-3 bg-[#f7f4f8] rounded-r-[1em] rounded-bl-[1em] min-h-[2em] ${
-                index % 2 === 0 ? "" : "text-red-500"
-              }`}
+              className={`text-[1.3em]  items-center px-2 relative max-w-[50%] break-words rounded-l-[1em] rounded-br-[1em] 
+              `}
             >
-              {data}
+              <div className="flex gap-[1em] items-end">
+                <div className="text-[1rem]">
+                  {userData.username === data.username ? "You" : data.username}
+                </div>
+                <div className="text-[0.9rem]">{data.time}</div>
+              </div>
+              <div
+                className={`${
+                  userData.username === data.username
+                    ? "bg-[#f1eff6]"
+                    : "bg-[#8d77c3]"
+                } text-[1.2rem] rounded-r-[1em] rounded-bl-[1em] px-2 py-2`}
+              >
+                {data.message}
+              </div>
             </div>
           </div>
         ))}
