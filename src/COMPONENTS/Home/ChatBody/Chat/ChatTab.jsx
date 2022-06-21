@@ -11,10 +11,18 @@ export default function ChatTab({ getData }) {
   const [typing, setTyping] = useState(false);
   const [userData, setUserData] = useState({});
   const room = 12;
+  const clearMessage = () => {
+    setMessage("");
+    return "";
+  };
   useEffect(() => {
     socket.emit("join_room", room);
   }, []);
-  const sendMessage = () => {
+  const sendMessage = (e) => {
+    e.preventDefault();
+    if (message == "") {
+      return false;
+    }
     const time = `${new Date().getHours()}: ${new Date().getMinutes()}`;
     socket.emit("send_message", {
       message,
@@ -27,6 +35,7 @@ export default function ChatTab({ getData }) {
       ...list,
       { message, time, user_id: userData.id, username: userData.username }
     ]);
+    clearMessage();
   };
   socket.off("receive_message").on("receive_message", (data) => {
     setReceived((list) => [
@@ -78,10 +87,10 @@ export default function ChatTab({ getData }) {
                   }`}
           >
             <div
-              className={`text-[1.3em]  items-center px-2 relative max-w-[50%] break-words rounded-l-[1em] rounded-br-[1em] 
+              className={`text-[1rem]  items-center px-2 relative max-w-[50%] break-words rounded-l-[1em] rounded-br-[1em] 
               `}
             >
-              <div className="flex gap-[1em] items-end">
+              <div className="flex gap-[0.5em] items-end">
                 <div className="text-[1rem]">
                   {userData.username === data.username ? "You" : data.username}
                 </div>
@@ -113,9 +122,13 @@ export default function ChatTab({ getData }) {
               className="w-[4rem] h-[4rem] rounded-full "
             />
           </div>
-          <div className="flex w-[90%] h-[80%] border rounded-[2em] px-4 ">
+          <form
+            className="flex w-[90%] h-[80%] border rounded-[2em] px-4 "
+            onSubmit={sendMessage}
+          >
             <input
               type="text"
+              value={message}
               placeholder="Send a message"
               className="text-[1.2em] w-[75%] h-[100%] outline-none rounded-2xl"
               onChange={(e) => setMessage(e.target.value)}
@@ -128,7 +141,7 @@ export default function ChatTab({ getData }) {
                 onClick={sendMessage}
               ></i>
             </div>
-          </div>
+          </form>
         </div>
       </div>
       {typing && (
