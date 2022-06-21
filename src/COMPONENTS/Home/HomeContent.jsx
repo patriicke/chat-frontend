@@ -7,10 +7,24 @@ function ChatWindow() {
   const getUserData = (data) => {
     setUserInfo(data);
   };
+  const [search, setSearch] = useState(false);
+  const [drop, setDrop] = useState(false);
   return (
     <div className="w-[100%] h-[100vh] flex flex-col gap-1">
-      <ChatNav userInfo={userInfo} />
-      <ChatBody getUserData={getUserData} />
+      <ChatNav
+        userInfo={userInfo}
+        drop={drop}
+        setDrop={setDrop}
+        search={search}
+        setSearch={setSearch}
+      />
+      <ChatBody
+        getUserData={getUserData}
+        drop={drop}
+        setDrop={setDrop}
+        search={search}
+        setSearch={setSearch}
+      />
     </div>
   );
 }
